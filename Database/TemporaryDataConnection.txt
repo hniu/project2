@@ -1,0 +1,4 @@
+Server:ix.cs.uoregon.edu
+Port:3469
+User:guest
+Password:
