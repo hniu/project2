@@ -63,7 +63,7 @@ DROP TABLE IF EXISTS Class;
 CREATE TABLE Class 
 (
   `CID` int(5) NOT NULL auto_increment,
-  `CName` char(7) NOT NULL,
+  `CName` char(60) NOT NULL,
   `Description` char(200) NOT NULL,
   `Credit` int(1) NOT NULL,
   PRIMARY KEY  (`CID`)
