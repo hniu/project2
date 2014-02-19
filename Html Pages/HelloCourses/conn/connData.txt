@@ -1,0 +1,9 @@
+<?php
+
+$server = "ix.cs.uoregon.edu";
+$dbname ="MotiAdviser";
+$user = "guest";
+$pass = "";
+$port="3496";
+
+?>
