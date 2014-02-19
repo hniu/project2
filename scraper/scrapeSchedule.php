@@ -15,7 +15,6 @@ function getCurrentCIS($url){
 // Create DOM from URL or file
 $html = new simple_html_dom();
 $html = file_get_html($url);
-//global $fp;
 global $current;
 // get the table
 foreach($html->find('td.dddead[width=323]') as $element){ 
@@ -51,7 +50,7 @@ foreach($html->find('td.dddead[width=323]') as $element){
        $chemclasses = array("111", "113", "221", "222", "223", "224H", "225H", "226H");
       if(in_array($split3[1], $chemclasses)){
       	 echo $split3[0] . ' ';//CH
-     	 echo $split3[1] . ' '; //#
+     	   echo $split3[1] . ' '; //#
          echo $split2[2] . '<br>'; //COURSE TITLE
          $current .= "$split3[0] $split3[1] $split2[2]\n";
      }
