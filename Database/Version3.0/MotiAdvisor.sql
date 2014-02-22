@@ -52,12 +52,11 @@ CREATE TABLE GroupsOfType
 ( 
   `GID` int(5) NOT NULL auto_increment,
   `RTID` int(5) NOT NULL,
-  `GroupAlternetive` boolean NOT NULL,
+  `GroupAlternetive` char(1) NOT NULL,
   PRIMARY KEY  (`GID`),
   KEY `RTID` (`RTID`),
   CONSTRAINT `GOT_FK1_CID1` FOREIGN KEY (`RTID`) REFERENCES `RequireType` (`RTID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 
 DROP TABLE IF EXISTS Class;
@@ -67,16 +66,18 @@ CREATE TABLE Class
   `CName` char(60) NOT NULL,
   `Description` char(200) NOT NULL,
   `Credit` int(1) NOT NULL,
+  `EvaluationRate` float,
+  `EvaluationNumber` int(4),
   PRIMARY KEY  (`CID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 DROP TABLE IF EXISTS ClassesOfGroup;
 CREATE TABLE ClassesOfGroup 
 ( 
   `GID` int(5) NOT NULL,
   `CID` int(5) NOT NULL,
-  `ClassAlternetive` boolean NOT NULL,
+  `ClassAlternetive` char(1) NOT NULL,
+  `Grade` char(1) NOT NULL,
   KEY `GID` (`GID`),
   KEY `CID` (`CID`),
   CONSTRAINT `COG_FK1_GID` FOREIGN KEY (`GID`) REFERENCES `GroupsOfType` (`GID`),
@@ -100,6 +101,7 @@ CREATE TABLE DependentClass
 (
   `CID1` int(5) NOT NULL,
   `CID2` int(5) NOT NULL,
+  `DCAlternetive` char(1) NOT NULL,
   KEY `CID1` (`CID1`),
   KEY `CID2` (`CID2`),
   CONSTRAINT `DC_FK1_CID1` FOREIGN KEY (`CID1`) REFERENCES `Class` (`CID`),
@@ -107,6 +109,25 @@ CREATE TABLE DependentClass
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+DROP TABLE IF EXISTS Term;
+CREATE TABLE Term
+(
+  `TID` int(5) NOT NULL auto_increment,
+  `TermName` char(60) NOT NULL,
+  Primary KEY `TID` (`TID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS ScheduleClass;
+CREATE TABLE ScheduleClass
+(
+  `TID` int(5) NOT NULL,
+  `CID` int(5) NOT NULL,
+  KEY `TID` (`TID`),
+  KEY `CID` (`CID`),
+  CONSTRAINT `SC_FK1_TID` FOREIGN KEY (`TID`) REFERENCES `Term` (`TID`),
+  CONSTRAINT `SC_FK2_CID` FOREIGN KEY (`CID`) REFERENCES `Class` (`CID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
