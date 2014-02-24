@@ -95,7 +95,8 @@ function loadSelectedCourses(){
 	?>
 	</select>
 	<input type="submit" id="save" name="save" value="Save">
-	</form>		
+	</form>
+	<a href="login.html">Logout</a>	
 </body>
 
 </html>

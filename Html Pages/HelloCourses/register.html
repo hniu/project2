@@ -1,19 +1,6 @@
 <html>
 <title>Registration Page</title>
-<script src="validate.js">
-function validateForm()
-{
-var x = document.forms["myForm"]["email"].value;
-var y = document.forms["myForm"]["username"].value;
-var z = document.forms["myForm"]["password"].value;
-var w = document.forms["myForm"]["re-password"].value;
-if((x==null||x=="")||(y==null||y=="")||(z==null||z=="")||(w==null||w==""))
-	{
-	alert("All the information must be filled out!");
-	return false;
-	}
-}
-</script>
+<script type="text/javascript" src="js/regValidate.js"></script>
 
 <form action="DBOp/register.php" id="register" method="post" name="myForm" onsubmit="return validateForm()">
 
@@ -22,22 +9,22 @@ if((x==null||x=="")||(y==null||y=="")||(z==null||z=="")||(w==null||w==""))
 
 <tr>
 <td><label for="email">Email Address*:</label> </td>
-<td><input id="email" maxlength="45" name="email" type="text" /></td>
+<td><input id="email" maxlength="45" name="email" type="email" placeholder="me@example.com" /></td>
 </tr>
 
 <tr>
 <td><label for="username">User Name*:</label> </td>
-<td><input id="username" maxlength="45" name="username" type="text" /> </td>
+<td><input id="username" maxlength="45" name="username" type="text" placeholder="At least 3 letters or numbers" pattern="[a-zA-Z0-9]{3,}"/> </td>
 </tr>
 
 <tr>
 <td><label for="password">Password*:</label></td>
-<td><input id="password" maxlength="45" name="password" type="password" /></td>
+<td><input id="password" maxlength="45" name="password" type="password" placeholder="5 - 10 letters or numbers" pattern="[a-zA-Z0-9]{5,}"/></td>
 </tr>
 
 <tr>
 <td><label for="password">Re-Password*:</label></td>
-<td><input id="re-password" maxlength="45" name="re-password" type="password" /></td>
+<td><input id="re-password" maxlength="45" name="re-password" type="password" oninput="check(this)"/></td>
 </tr>
 
 <tr>

@@ -42,9 +42,9 @@ if($stmt->fetch() != null){
 	Header( "Location: ../addCoursesPage.php" ); 
 
 }else{
-	echo 'alert(Wrong Email/Password!)';
-	Header( "HTTP/1.1 301 Moved Permanently" ); 
-	Header( "Location: ../login.html" ); 
+	echo 'Wrong Email/Password!';
+	header('Refresh: 1; URL=../login.html');
+
 }
 
 ?>
