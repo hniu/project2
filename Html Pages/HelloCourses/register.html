@@ -1,7 +1,21 @@
 <html>
 <title>Registration Page</title>
-<script src="validate.js"></script>
-<form action="" id="register" method="post">
+<script src="validate.js">
+function validateForm()
+{
+var x = document.forms["myForm"]["email"].value;
+var y = document.forms["myForm"]["username"].value;
+var z = document.forms["myForm"]["password"].value;
+var w = document.forms["myForm"]["re-password"].value;
+if((x==null||x=="")||(y==null||y=="")||(z==null||z=="")||(w==null||w==""))
+	{
+	alert("All the information must be filled out!");
+	return false;
+	}
+}
+</script>
+
+<form action="DBOp/register.php" id="register" method="post" name="myForm" onsubmit="return validateForm()">
 
 <table border="0">
 <tbody>
@@ -23,7 +37,7 @@
 
 <tr>
 <td><label for="password">Re-Password*:</label></td>
-<td><input id="password" maxlength="45" name="password" type="password" /></td>
+<td><input id="re-password" maxlength="45" name="re-password" type="password" /></td>
 </tr>
 
 <tr>
@@ -32,5 +46,5 @@
 
 </tbody></table>
 </form>
-
+<a href="login.html">Home</a>
 </html>

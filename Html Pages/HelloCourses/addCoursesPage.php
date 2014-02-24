@@ -2,35 +2,65 @@
 <html>
 <?php
 include ('conn/connData.txt');
+session_start();
+$id=$_SESSION['id'];
+$name=$_SESSION['name'];
+$lastSelectedCourses = array();
+//---------------------------------------------set up the connection with mysql
 $mysqli = new mysqli($server, $user, $pass, $dbname, $port);
 if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
 
-$sql = 'SELECT CID, CName FROM Class';
-$CID = null;
-$CName = null;
-//prepare the statement
-/*
-$stmt = $mysqli->prepare($sql);
-if(!$stmt){
-	echo "Prepare failed: (" . $myslqi->errno .")" . $mysqli->error;
+//---------------------------------------help to load all courses int the selection list
+function loadUnselectedCourses(){
+	global $mysqli;
+	global $id;
+	$sql = 'SELECT CID, CName FROM Class WHERE CID NOT IN (SELECT CID from ChosenClass WHERE ID = ?)';
+	$CID = NULL;
+	$CName = NULL;
+	//create statement
+	$stmt=$mysqli->prepare($sql);
+	//bind the id
+	$stmt->bind_param("i", $id);
+	//execute query
+	$stmt->execute();
+	//bind result
+	$stmt->bind_result($CID, $CName);
+	//print options
+	while($stmt->fetch()){
+		echo '<option value='.$CID.'> '. $CName.'</option>';
+	}
 }
-*/
-//execute
-/*
-if(!$stmt->execute()){
-	echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+
+//---------------------------------------help to select the chosen class
+function loadSelectedCourses(){
+	global $mysqli;
+	global $id;
+	global $lastSelectedCourses;
+	$sql = 'select CID, CName from ChosenClass left join Class using (CID) where ID = ?';
+	$CID = NULL;
+	$CName = NULL;
+	//create statement
+	$stmt=$mysqli->prepare($sql);
+	//bind the id
+	$stmt->bind_param("i", $id);
+	//execute query
+	$stmt->execute();
+	//bind result
+	$stmt->bind_result($CID, $CName);
+	//print options
+	while($stmt->fetch()){
+		echo '<option value='.$CID.' selected> '. $CName.'</option>';
+		array_push($lastSelectedCourses, strval($CID));
+	}
+	$_SESSION['selCourses'] = $lastSelectedCourses;
 }
-*/
-//show the result for the sea1
-/*
-if(!($stmt->bind_result($CIS, $CName))){
-	echo "Binding output parameters failed: (" . $stmt->errno . ") " . $stmt->error;
-}
-*/
-echo '234';
+
+
+
 ?>
+
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Course Selection</title>
@@ -40,39 +70,33 @@ echo '234';
 	<script type="text/javascript">
 		$().ready(function() {
 			$('#courses').multiselect2side({
+				search: "Search: ",
 				selectedPosition: 'right',
 				moveOptions: false,
 				labelsx: '',
 				labeldx: '',
+				labelsx: '* Selected *',
 				autoSort: true,
 				autoSortAvailable: true
 				});
 				return false;
-			});
+		});
 	</script>
 </head>
 <body>
-		<h3>Courses have taken</h3>
-		<p></p>
-		<select name="courses" id='courses' multiple='multiple' size='8' >
-			<?php
-/*
-				while($stmt->fetch()){
-					each '<option value="$CIS"> '. $CName.'</option>';
-				}
-*/
+	<h3>Welcome, <?php echo $name?></h3>
+	<form action="DBOp/chosenCoursesOP.php" method="post">
+	<select name="courses[]" id='courses' multiple='multiple' size='8' >
+	<?php
+		//preload all selected courses
 
-			?>
-			<option value="1">Option a 1</option>
-			<option value="2">Option b 2</option>
-			<option value="3">Option c 3</option>
-			<option value="4">Option d 4</option>
-			<option value="5">Option e 5</option>
-			<option value="6">Option f 6</option>
-			<option value="7">Option g 7</option>
-			<option value="8">Option h 8</option>
-			<option value="9">Option i 9</option>
-			<option value="10">Option l 10</option>
-		</select>		
+		loadUnselectedCourses();
+		loadSelectedCourses();
+	?>
+	</select>
+	<input type="submit" id="save" name="save" value="Save">
+	</form>		
 </body>
+
 </html>
+
