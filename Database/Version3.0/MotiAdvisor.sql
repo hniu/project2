@@ -31,7 +31,7 @@ CREATE TABLE RequireType
 ( 
   `RTID` int(5) NOT NULL auto_increment,
   `TypeName` char(30) NOT NULL,
-  `TotalCridit` int(3) NOT NULL,
+  `TotalCredit` int(3) NOT NULL,
   PRIMARY KEY  (`RTID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -40,6 +40,7 @@ CREATE TABLE GraduateRule
 ( 
   `MID` int(4) NOT NULL,
   `RTID` int(5) NOT NULL,
+  PRIMARY KEY  (`MID`,`PTID`),
   KEY `MID` (`MID`),
   KEY `RTID` (`RTID`),
   CONSTRAINT `GR_FK1_MID` FOREIGN KEY (`MID`) REFERENCES `Major` (`MID`),
@@ -63,12 +64,12 @@ DROP TABLE IF EXISTS Class;
 CREATE TABLE Class 
 (
   `CID` int(5) NOT NULL auto_increment,
-  `CName` char(60) NOT NULL,
-  `Description` char(200) NOT NULL,
+  `CName` char(80) NOT NULL,
+  `Description` char(500) NOT NULL,
   `Credit` int(1) NOT NULL,
   `EvaluationRate` float,
   `EvaluationNumber` int(4),
-  PRIMARY KEY  (`CID`)
+  PRIMARY KEY  (`CID`,`CName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS ClassesOfGroup;
@@ -77,7 +78,8 @@ CREATE TABLE ClassesOfGroup
   `GID` int(5) NOT NULL,
   `CID` int(5) NOT NULL,
   `ClassAlternetive` char(1) NOT NULL,
-  `Grade` char(1) NOT NULL,
+  `Graded` char(1) NOT NULL,
+  PRIMARY KEY  (`GID`,`CID`),
   KEY `GID` (`GID`),
   KEY `CID` (`CID`),
   CONSTRAINT `COG_FK1_GID` FOREIGN KEY (`GID`) REFERENCES `GroupsOfType` (`GID`),
@@ -90,6 +92,7 @@ CREATE TABLE ChosenClass
 (
   `ID` int(5) NOT NULL ,
   `CID` int(5) NOT NULL,
+  PRIMARY KEY  (`ID`,`CID`),
   KEY `ID` (`ID`),
   KEY `CID` (`CID`),
   CONSTRAINT `CC_FK1_ID` FOREIGN KEY (`ID`) REFERENCES `User` (`ID`),
@@ -102,6 +105,7 @@ CREATE TABLE DependentClass
   `CID1` int(5) NOT NULL,
   `CID2` int(5) NOT NULL,
   `DCAlternetive` char(1) NOT NULL,
+  PRIMARY KEY  (`CID1`,`CID2`),
   KEY `CID1` (`CID1`),
   KEY `CID2` (`CID2`),
   CONSTRAINT `DC_FK1_CID1` FOREIGN KEY (`CID1`) REFERENCES `Class` (`CID`),
@@ -113,7 +117,7 @@ DROP TABLE IF EXISTS Term;
 CREATE TABLE Term
 (
   `TID` int(5) NOT NULL auto_increment,
-  `TermName` char(60) NOT NULL,
+  `TermName` char(20) NOT NULL,
   Primary KEY `TID` (`TID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -123,6 +127,7 @@ CREATE TABLE ScheduleClass
 (
   `TID` int(5) NOT NULL,
   `CID` int(5) NOT NULL,
+  PRIMARY KEY  (`TID`,`CIS`),
   KEY `TID` (`TID`),
   KEY `CID` (`CID`),
   CONSTRAINT `SC_FK1_TID` FOREIGN KEY (`TID`) REFERENCES `Term` (`TID`),
