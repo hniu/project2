@@ -32,7 +32,7 @@ if(!checkExist()){
 	if (!($stmt)) {
   	  echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 	}
-	$stmt->bind_param("sss", $email, $username, $password);
+	$stmt->bind_param("sss", $email, $password, $username);
 	// execute the statement
 	$stmt->execute();
 	$stmt->close();

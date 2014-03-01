@@ -46,5 +46,6 @@ if($stmt->fetch() != null){
 	header('Refresh: 1; URL=../login.html');
 
 }
-
+$stmt->close();
+$mysqli->close();
 ?>
