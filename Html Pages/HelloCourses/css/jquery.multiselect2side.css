@@ -23,8 +23,8 @@
 	font-size: 10pt;
 	margin: 0;
 	padding: 0 8px;
-	width: 40px;
-	color: black;
+	width: 80px;
+	color: blue;
 	text-align: center;
 	overflow: hidden;
 }
@@ -54,14 +54,14 @@
 }
 
 .ms2side__div select {
-	width: 220px;
+	width: 250px;
 	float: left;
 }
 
 
 /* INPUT FOR SEARCH */
 .ms2side__header input {
-	width: 80px;
+	width: 130px;
 	height: 12px;
 }
 
