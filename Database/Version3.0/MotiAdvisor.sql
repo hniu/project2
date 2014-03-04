@@ -40,7 +40,7 @@ CREATE TABLE GraduateRule
 ( 
   `MID` int(4) NOT NULL,
   `RTID` int(5) NOT NULL,
-  PRIMARY KEY  (`MID`,`PTID`),
+  PRIMARY KEY  (`MID`,`RTID`),
   KEY `MID` (`MID`),
   KEY `RTID` (`RTID`),
   CONSTRAINT `GR_FK1_MID` FOREIGN KEY (`MID`) REFERENCES `Major` (`MID`),
@@ -54,6 +54,7 @@ CREATE TABLE GroupsOfType
   `GID` int(5) NOT NULL auto_increment,
   `RTID` int(5) NOT NULL,
   `GroupAlternetive` char(1) NOT NULL,
+  `Graded` char(1) NOT NULL,
   PRIMARY KEY  (`GID`),
   KEY `RTID` (`RTID`),
   CONSTRAINT `GOT_FK1_CID1` FOREIGN KEY (`RTID`) REFERENCES `RequireType` (`RTID`)
@@ -65,7 +66,7 @@ CREATE TABLE Class
 (
   `CID` int(5) NOT NULL auto_increment,
   `CName` char(80) NOT NULL,
-  `Description` char(500) NOT NULL,
+  `Description` text NOT NULL,
   `Credit` int(1) NOT NULL,
   `EvaluationRate` float,
   `EvaluationNumber` int(4),
@@ -78,7 +79,6 @@ CREATE TABLE ClassesOfGroup
   `GID` int(5) NOT NULL,
   `CID` int(5) NOT NULL,
   `ClassAlternetive` char(1) NOT NULL,
-  `Graded` char(1) NOT NULL,
   PRIMARY KEY  (`GID`,`CID`),
   KEY `GID` (`GID`),
   KEY `CID` (`CID`),
@@ -118,7 +118,7 @@ CREATE TABLE Term
 (
   `TID` int(5) NOT NULL auto_increment,
   `TermName` char(20) NOT NULL,
-  Primary KEY `TID` (`TID`)
+  Primary KEY `TID` (`TID`,`TermName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -127,13 +127,21 @@ CREATE TABLE ScheduleClass
 (
   `TID` int(5) NOT NULL,
   `CID` int(5) NOT NULL,
-  PRIMARY KEY  (`TID`,`CIS`),
+  PRIMARY KEY  (`TID`,`CID`),
   KEY `TID` (`TID`),
   KEY `CID` (`CID`),
   CONSTRAINT `SC_FK1_TID` FOREIGN KEY (`TID`) REFERENCES `Term` (`TID`),
   CONSTRAINT `SC_FK2_CID` FOREIGN KEY (`CID`) REFERENCES `Class` (`CID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+Create view TrackClasses as 
+select m.MID , rt.TypeName, rt.TotalCredit, gt.GID, gt.GroupAlternetive, gt.Graded, cg.ClassAlternetive, c.CID, c.CName, c.Credit from Major as m
+left join GraduateRule as gr on m.MID=gr.MID
+left join RequireType as rt on gr.RTID=rt.RTID
+left join GroupsOfType as gt on rt.RTID=gt.RTID
+left join ClassesOfGroup as cg on gt.GID=cg.GID
+left join Class as c on cg.CID=c.CID;
 
 
 
