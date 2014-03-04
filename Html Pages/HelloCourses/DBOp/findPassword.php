@@ -36,7 +36,7 @@ if($stmt->fetch() != null){
 	echo '<a href="../login.html">BACK<<</a>';
 }else{//email does not exist
 	echo 'Email does not exist!';
-	header('Refresh: 1; URL=../login.html');
+	header('Refresh: 2; URL=../login.html');
 }
 
 

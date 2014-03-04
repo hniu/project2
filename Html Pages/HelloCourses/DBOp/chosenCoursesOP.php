@@ -11,6 +11,7 @@ if ($mysqli->connect_errno) {
 }
 
 //---------------------------------------help to insert new record in the ChosenClass table
+
 function addCourse($CID){
 	global $mysqli;
 	global $id;
@@ -26,7 +27,6 @@ function addCourse($CID){
 		echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 	}
 	$stmt->close();
-
 }
 
 //---------------------------------------help to delete record in the ChosenClass table
@@ -84,6 +84,8 @@ function isCourseExistInDB($CID){
 }
 */
 
+
+
 //after selected:
 //
 //if CID in db is not in list: delete the record from db
@@ -95,21 +97,22 @@ if ($list == NULL){
 	$list = array();
 }
 $deleteList = array_diff($lastSelectedCourses , $list);
-/*print_r ($list);
-print "delete";
-var_dump($deleteList);
-print "delete";
-print_r($lastSelectedCourses);
-*/
+
+
 foreach ($deleteList as $CID){
 	//print "delete" . $CID;
 	deleteCourse($CID);
 }
+
 $insertList = array_diff($list, $lastSelectedCourses );
+
 foreach ($insertList as $CID){
 	//print "insert" . $CID;
 	addCourse($CID);
 }
-$mysqli->close();
+
 Header( "Location: ../addCoursesPage.php" );
+
+$mysqli->close();
+
 ?>

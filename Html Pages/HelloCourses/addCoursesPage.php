@@ -57,8 +57,26 @@ function loadSelectedCourses(){
 	$_SESSION['selCourses'] = $lastSelectedCourses;
 }
 
-
-
+function getTrack(){
+	global $mysqli;
+	global $track;
+	$sql = 'select MID, Major, Track from Major';
+	$mid = NULL;
+	$major = NULL;
+	$tname = NULL;
+	//create statement
+	$stmt=$mysqli->prepare($sql);
+	//execute query
+	$stmt->execute();
+	//bind result
+	$stmt->bind_result($mid, $major, $tname);
+	while($stmt->fetch()){
+		echo '<option value='. $mid .' '. $major;
+		if(strcmp($tname,"Foundations") == 0)
+			echo " selected";
+		echo ' > '. $tname.'</option>';
+	}
+}
 ?>
 
 <head>
@@ -81,12 +99,19 @@ function loadSelectedCourses(){
 				});
 				return false;
 		});
+
+	function getSelValue(sel){
+		var value = (sel.options[sel.selectedIndex].value);
+		var text = (sel.options[sel.selectedIndex].innerHTML);
+		var a = document.getElementById('schedulelink'); //or grab it by tagname etc
+		a.href = "DBOp/schedule.php?track=" + text + "&id=" + value;
+	}
 	</script>
 </head>
 <body>
 	<h3>Welcome, <?php echo $name?></h3>
 	<form action="DBOp/chosenCoursesOP.php" method="post">
-	<select name="courses[]" id='courses' multiple='multiple' size='8' >
+	<select name="courses[]" id='courses' multiple='multiple' size='20' >
 	<?php
 		//preload all selected courses
 
@@ -94,8 +119,18 @@ function loadSelectedCourses(){
 		loadSelectedCourses();
 	?>
 	</select>
-	<input type="submit" id="save" name="save" value="Save">
+	<select name="major" id = "major" onChange='getSelValue(this)'>
+	<?php
+		//preload all the major
+		getTrack();
+	?>
+	</select>
+	<input type="submit" id="save" value="Save">
 	</form>
+	<a href="DBOp/schedule.php?track=Foundations&id=5" id='schedulelink'>Next Term Schedule</a>
+	<br>
+	<a href="evaluation.php">Evaluation</a>
+	<br>
 	<a href="login.html">Logout</a>	
 </body>
 
