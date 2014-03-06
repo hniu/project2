@@ -135,6 +135,23 @@ CREATE TABLE ScheduleClass
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+
+DROP TABLE IF EXISTS ClassComment;
+CREATE TABLE ClassComment
+(
+  `CID` int(5) NOT NULL,
+  `ID` int(5) NOT NULL,
+  `Comment` text,
+  `Time` time,
+  PRIMARY KEY  (`CID`,`ID`),
+  KEY `CID` (`CID`),
+  KEY `ID` (`ID`),
+  CONSTRAINT `CC_FK1_TID` FOREIGN KEY (`CID`) REFERENCES `Class` (`CID`),
+  CONSTRAINT `CC_FK2_CID` FOREIGN KEY (`ID`) REFERENCES `User` (`ID`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 Create view TrackClasses as 
 select m.MID , rt.TypeName, rt.TotalCredit, gt.GID, gt.GroupAlternetive, gt.Graded, cg.ClassAlternetive, c.CID, c.CName, c.Credit from Major as m
 left join GraduateRule as gr on m.MID=gr.MID
