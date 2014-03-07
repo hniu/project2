@@ -1,13 +1,13 @@
 <?php
 include ('../conn/connData.txt');
-$MID = $_POST['major'];
-echo $MID;
 session_start();
 $id=$_SESSION['id'];
 $name=$_SESSION['name'];
-$_SESSION['mid']=$MID;
-
 $lastSelectedCourses = $_SESSION['selCourses'];
+//submit variable
+$MID = $_POST['major'];
+$_SESSION['mid'] = $MID;
+
 //---------------------------------------------set up the connection with mysql
 $mysqli = new mysqli($server, $user, $pass, $dbname, $port);
 if ($mysqli->connect_errno) {
@@ -33,6 +33,7 @@ function addCourse($CID){
 	$stmt->close();
 }
 
+//update the track in the user table
 function updateTrack($MID){
 	global $mysqli;
 	global $id;
@@ -195,16 +196,15 @@ foreach ($deleteList as $CID){
 
 $insertList = array_diff($list, $lastSelectedCourses );
 
+//update track
+updateTrack($MID);
+
 foreach ($insertList as $CID){
 	//print "insert" . $CID;
 	if(checkReg($CID)){
 		addCourse($CID);
 	}
 }
-
-//update track
-updateTrack($MID);
-
 echo "Change successfully!";
 echo '<br><a href=../addCoursesPage.php>Back To Adding Courses Page</a>';
 $mysqli->close();

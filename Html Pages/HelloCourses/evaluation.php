@@ -13,7 +13,7 @@ $mysqli = new mysqli($server, $user, $pass, $dbname, $port);
 if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
-
+// find the course name according to its id
 function findCName($CID){
 	global $mysqli;
 	$sql = 'SELECT CName FROM Class WHERE CID = ?';
@@ -34,7 +34,7 @@ function findCName($CID){
 		return '';
 	}
 }
-
+//get all the description for the one course id
 function findDes($CID){
 	global $mysqli;
 	$sql = 'SELECT Description FROM Class WHERE CID = ?';
@@ -60,6 +60,39 @@ function findDes($CID){
 	}
 }
 
+//get the comment from the database
+function getScore($CID){
+	global $mysqli;
+	$sql = 'SELECT EvaluationRate, EvaluationNumber FROM Class WHERE CID = ?';
+	$score = NULL;
+	$total = NULL;
+	//create statement
+	$stmt=$mysqli->prepare($sql);
+	//bind the cid
+	$stmt->bind_param("i", $CID);
+	//execute query
+	$stmt->execute();
+	//bind result
+	$stmt->bind_result($score, $total);
+	if($stmt->fetch()){
+		echo "<Strong>Rating: ";
+		if ($score == NULL){
+			echo "0";
+		}else{
+			echo $score;
+		}
+		echo "</Strong><br>";
+		echo "<Strong>Rating By ";
+		if ($total == NULL){
+			echo "0";
+		}else{
+			echo $score;
+		}
+		echo " People</Strong><br>";
+	}
+	$stmt->close();
+}
+
 session_start();
 $courses = $_SESSION['selCourses'];
 
@@ -79,8 +112,9 @@ foreach ( $courses as $CID ){
   	<input type="radio" name= '.$CID.' value="3"><i></i>
   	<input type="radio" name= '.$CID.' value="4"><i></i>
   	<input type="radio" name= '.$CID.' value="5"><i></i>
-	</span><strong class="choice">Choose a rating</strong> <br>';
+	</span><br>';
 	echo $rating;
+	getScore($CID);
 }
 
 $mysqli->close();

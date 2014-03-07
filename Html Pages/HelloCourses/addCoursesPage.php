@@ -5,6 +5,7 @@ include ('conn/connData.txt');
 session_start();
 $id=$_SESSION['id'];
 $name=$_SESSION['name'];
+$trackid = $_SESSION['mid'];
 $lastSelectedCourses = array();
 //---------------------------------------------set up the connection with mysql
 $mysqli = new mysqli($server, $user, $pass, $dbname, $port);
@@ -56,10 +57,10 @@ function loadSelectedCourses(){
 	}
 	$_SESSION['selCourses'] = $lastSelectedCourses;
 }
-
+//load all tracks
 function getTrack(){
 	global $mysqli;
-	global $track;
+	global $trackid;
 	$sql = 'select MID, Major, Track from Major';
 	$mid = NULL;
 	$major = NULL;
@@ -72,7 +73,7 @@ function getTrack(){
 	$stmt->bind_result($mid, $major, $tname);
 	while($stmt->fetch()){
 		echo '<option value='. $mid .' '. $major;
-		if(strcmp($tname,"Foundations") == 0)
+		if(strcmp($mid,$trackid) == 0)
 			echo " selected";
 		echo ' > '. $tname.'</option>';
 	}
@@ -125,13 +126,16 @@ function getTrack(){
 		getTrack();
 	?>
 	</select>
+	<br>
 	<input type="submit" id="save" value="Save">
 	</form>
 	<a href="DBOp/schedule.php?track=Foundations&id=5" id='schedulelink'>Next Term Schedule</a>
 	<br>
 	<a href="evaluation.php">Evaluation</a>
 	<br>
-	<a href="login.html">Logout</a>	
+	<a href="DBOp/comment.php">Comments</a>
+	<br>
+	<a href="DBOp/logout.php">Logout</a>	
 </body>
 
 </html>

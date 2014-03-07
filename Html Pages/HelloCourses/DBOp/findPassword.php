@@ -32,36 +32,39 @@ if(!($stmt->bind_result($name, $password))){
 }
 
 if($stmt->fetch() != null){
+	//Generate the email format
+	$to      = $email; // Send email to our user
+	$subject = 'Reset-Password On HelloCourses'; // Give the email a subject 
+	$message = '
+	
+	Hello, '.$name.'
+	
+	You recently asked to reset your password on HelloCourses. To complete your request, your current password is: 
+	
+	------------------------
+	Password: '.$password.'
+	------------------------
+	
+	Please click this link to login your account:
+	http://ix.cs.uoregon.edu/~hanqing/Project2/HelloCourses/login.html
+	
+	Thanks,
+	HelloCourses
+	'; // Our message above including the link
+	                     
+	$headers = 'From:noreply@hellocourses.com' . "\r\n" .
+			'Reply-To: hanqing@uoregon.edu' . "\r\n" .
+			'X-Mailer: PHP/' . phpversion(); //set the header
+	mail($to, $subject, $message, $headers); // Send our email
+
 	echo 'The password has sent to your email, please check it.';
-	echo '<a href="../login.html">BACK<<</a>';
+	echo '<a href="../login.html">BACK<<</a>';	
+	
 }else{//email does not exist
 	echo 'Email does not exist!';
 	header('Refresh: 2; URL=../login.html');
 }
 
 
-$to      = $email; // Send email to our user
-$subject = 'Reset-Password On HelloCourses'; // Give the email a subject 
-$message = '
-
-Hello, '.$name.'
-
-You recently asked to reset your password on HelloCourses. To complete your request, your current password is: 
-
-------------------------
-Password: '.$password.'
-------------------------
-
-Please click this link to login your account:
-http://ix.cs.uoregon.edu/~hanqing/Project2/HelloCourses/login.html
-
-Thanks,
-HelloCourses
-'; // Our message above including the link
-                     
-$headers = 'From:noreply@hellocourses.com' . "\r\n" .
-		'Reply-To: hanqing@uoregon.edu' . "\r\n" .
-		'X-Mailer: PHP/' . phpversion(); //set the header
-mail($to, $subject, $message, $headers); // Send our email
 
 ?>
