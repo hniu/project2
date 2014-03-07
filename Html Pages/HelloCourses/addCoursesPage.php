@@ -34,6 +34,26 @@ function loadUnselectedCourses(){
 	}
 }
 
+//---------------------------------------------load all terms
+function loadTerm(){
+	global $mysqli;
+	global $id;
+	$sql = 'SELECT TID, TermName from Term';
+	$tid = NULL;
+	$termname = NULL;
+	//create statement
+	$stmt=$mysqli->prepare($sql);
+	//execute query
+	$stmt->execute();
+	//bind result
+	$stmt->bind_result($tid, $termname);
+	//print options
+	while($stmt->fetch()){
+		echo '<option value='.$tid.'> '. $termname.'</option>';
+	}
+
+}
+
 //---------------------------------------help to select the chosen class
 function loadSelectedCourses(){
 	global $mysqli;
@@ -101,12 +121,18 @@ function getTrack(){
 				return false;
 		});
 
-	function getSelValue(sel){
-		var value = (sel.options[sel.selectedIndex].value);
-		var text = (sel.options[sel.selectedIndex].innerHTML);
-		var a = document.getElementById('schedulelink'); //or grab it by tagname etc
-		a.href = "DBOp/schedule.php?track=" + text + "&id=" + value;
-	}
+		function getSelValue(sel){
+			var value = (sel.options[sel.selectedIndex].value);
+			var text = (sel.options[sel.selectedIndex].innerHTML);
+			var a = document.getElementById('schedulelink'); //or grab it by tagname etc
+			a.href = "DBOp/schedule.php?track=" + text + "&id=" + value;
+		}
+		function getTermValue(sel){
+			var value = (sel.options[sel.selectedIndex].value);
+			var text = (sel.options[sel.selectedIndex].innerHTML);
+			var a = document.getElementById('termlink'); //or grab it by tagname etc
+			a.href = "DBOp/suggest.php?termname=" + text + "&termid=" + value;
+		}
 	</script>
 </head>
 <body>
@@ -127,9 +153,19 @@ function getTrack(){
 	?>
 	</select>
 	<br>
+	<select name="term" id = "term" onChange='getTermValue(this)'>
+	<?php
+		//preload all the term
+		loadTerm();
+	?>
+	</select>
+
+	<br>
 	<input type="submit" id="save" value="Save">
 	</form>
-	<a href="DBOp/schedule.php?track=Foundations&id=5" id='schedulelink'>Next Term Schedule</a>
+	<a href="DBOp/schedule.php?track=Foundations&id=5" id='schedulelink' >Next Term Schedule</a>
+	<br>
+	<a href="DBOp/suggest.php?termid=1&termname=Fall 2013" id="termlink" >Suggest for Next Term</a>
 	<br>
 	<a href="evaluation.php">Evaluation</a>
 	<br>
