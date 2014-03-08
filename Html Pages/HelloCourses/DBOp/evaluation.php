@@ -107,11 +107,11 @@ foreach ( $courses as $CID ){
 	}
 	echo '</font><br>';
 	$rating = '<span class="star-rating">
-  	<input type="radio" name= '.$CID.' value="1"><i></i>
-  	<input type="radio" name= '.$CID.' value="2"><i></i>
-  	<input type="radio" name= '.$CID.' value="3"><i></i>
-  	<input type="radio" name= '.$CID.' value="4"><i></i>
-  	<input type="radio" name= '.$CID.' value="5"><i></i>
+  	<input type="radio" name= '.$CID'. value="1"><i></i>
+  	<input type="radio" name= '.$CID'. value="2"><i></i>
+  	<input type="radio" name= '.$CID'. value="3"><i></i>
+  	<input type="radio" name= '.$CID'. value="4"><i></i>
+  	<input type="radio" name= '.$CID'. value="5"><i></i>
 	</span><br>';
 	echo $rating;
 	getScore($CID);
