@@ -1,21 +1,26 @@
 <html>
+<head>
 <title>Forgot Password</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
 
+<div style="padding: 100px 0 0 0px;" align="center">
+<div id="style" >
 <form action="DBOp/findPassword.php" id="register" method="post" name="myForm">
 
-<table border="0">
-<font>Find your password by using email:</font>
-<tbody>
+<p><font color="red">Find your password by using Email</font></p>
+<div id="style-name" style="margin-top:0px;">
+</div>
+<div id="style-field" style="margin-top:10px;">
 <tr>
-<td><label for="email">Email Address*:</label> </td>
-<td><input id="email" maxlength="45" name="email" type="email" placeholder="me@example.com" required="required"/></td>
+<td><font color="red">Email*:</font><input id="email" maxlength="45" name="email" type="email" placeholder="me@example.com" required="required"/></td>
 </tr>
-
+</br> 
 <tr>
-<td align="right"><input name="Submit" type="submit" value="Find Password" /></td>
+<td align="left"><input name="Submit" type="submit" value="Find Password" /></td>
 </tr>
-
-</tbody></table>
+</div>
+</div>
 </form>
 <a href="login.html">Home</a>
 </html>

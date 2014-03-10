@@ -126,14 +126,14 @@ function commentInsertion()
 	global $mysqli;
 	global $id;
 	global $cid;
-	$query = "INSERT INTO ClassComment VALUES (?,?,?,?)";
-	$date = date('Y-m-d H:i:s');
+	$query = 'INSERT INTO ClassComment(CID, ID, Comment) VALUES (?,?,?)';
+	#$date = date('Y-m-d H:i:s');
 	$stmt = $mysqli->prepare($query);
 	if(!$stmt){
 		echo "Prepare failed: (" . $mysqli->errno .")" . $mysqli->error;
 	
 	}
-	if(!$stmt->bind_param("iiss",  $cid, $id, $_GET['content'], $date)){
+	if(!$stmt->bind_param("iis",  $cid, $id, $_GET['content'])){
 			echo "Binding parameters failed: (" . $stmt->errno . ") ".  $stmt->error;
 	}
 		

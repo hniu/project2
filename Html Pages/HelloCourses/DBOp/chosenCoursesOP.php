@@ -198,15 +198,21 @@ $insertList = array_diff($list, $lastSelectedCourses );
 
 //update track
 updateTrack($MID);
-
+$alladded = True;
 foreach ($insertList as $CID){
 	//print "insert" . $CID;
 	if(checkReg($CID)){
 		addCourse($CID);
+	}else{
+		$alladded = False;
 	}
 }
-echo "Change successfully!";
-echo '<br><a href=../addCoursesPage.php>Back To Adding Courses Page</a>';
+if($alladded){
+	header("Location: ../addCoursesPage.php");
+}else{
+	echo '<br>';
+	echo '<a href="../addCoursesPage.php">Back</a>';
+}
 $mysqli->close();
 
 ?>
