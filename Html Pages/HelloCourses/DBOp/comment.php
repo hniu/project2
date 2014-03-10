@@ -3,11 +3,9 @@
 <title>All Courses</title>
 </head>
 <body>
-<<<<<<< HEAD
 
-=======
 <a href="../addCoursesPage.php">HOME</a>
->>>>>>> Update for COmment
+
 <div id="div1" style="float:left;width:50%"> 
 <?php
 include ('../conn/connData.txt');
@@ -19,12 +17,12 @@ if ($mysqli->connect_errno)
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
 
-<<<<<<< HEAD
-=======
+//<<<<<<< HEAD
+//=======
 session_start();
 $id=$_SESSION['id'];
 
->>>>>>> Update for COmment
+//>>>>>>> Update for COmment
 // find the course name according to its id
 function findCourses(){
 	global $mysqli;
@@ -52,14 +50,14 @@ findCourses();
 <div id="div2" style="float:left;width:48%">
 <?php
 $cid=$_GET['cid'];
+$_SESSION['precid'] = $cid;
 
 // find the course name according to its id
-<<<<<<< HEAD
-function findDes(){
-=======
+//<<<<<<< HEAD
+//=======
 function findDes()
 {
->>>>>>> Update for COmment
+//>>>>>>> Update for COmment
 	global $mysqli;
 	global $cid;
 	$sql = 'select CName,Description,Credit,EvaluationRate from Class where CID='.$cid;
@@ -85,13 +83,8 @@ function findDes()
 		echo '<br>';
 	}
 	$stmt->close();
-<<<<<<< HEAD
+//<<<<<<< HEAD
 
-}
-//show all the courese
-if($cid != NULL){
-	findDes();
-=======
 }
 
 function findComment()
@@ -110,6 +103,7 @@ function findComment()
 	$stmt->bind_result($SName,$SComment,$Time);
 	While($stmt->fetch())
 	{
+		echo '<hr>';
 		echo '<div class="text" style=" text-align:left;"> <b>' .$SName.'</b> : '. $Time .'</a> <br>';
 		echo '<div class="text" style=" text-align:left;"> ' .$SComment.'</a> <br>';
 		
@@ -119,23 +113,39 @@ function findComment()
 
 function submitComment()
 {
+	echo '<form name="content" method="get" action='.$_SERVER['PHP_SELF'].'>';
 	echo '<div class="text" style=" text-align:left;"> You say: </a> <br>';
-	echo '<textarea name="content" cols="36" rows="8" id="content" style="border: 1 solid #888888;LINE-HEIGHT:18px;padding: 3px;"></textarea>';
-	echo '<input type="button" onClick="commentInsertion()" value="Submit"/>';
+	echo '<textarea name="content" cols="36" rows="8" id="content" required = "required" style="border: 1 solid #888888;LINE-HEIGHT:18px;padding: 3px;"></textarea>';
+	echo '<input type="hidden" name="cid" value='.$_SESSION['precid'].'>';
+	echo '<input type="submit" value="Submit"/>';
+	echo '</form>';
 }
 
 function commentInsertion()
 {
 	global $mysqli;
-	global $cid;
 	global $id;
-	$query = "INSERT INTO `People` VALUES (";
-	$query = $query.$cid.",".$id.",'".$_GET["content"].",'default'";
-	if($stmt =  $mysqli->prepare($query))
-	{
-		$stmt -> execute();
-		$stmt -> close();
+	global $cid;
+	$query = "INSERT INTO ClassComment VALUES (?,?,?,?)";
+	$date = date('Y-m-d H:i:s');
+	$stmt = $mysqli->prepare($query);
+	if(!$stmt){
+		echo "Prepare failed: (" . $mysqli->errno .")" . $mysqli->error;
+	
 	}
+	if(!$stmt->bind_param("iiss",  $cid, $id, $_GET['content'], $date)){
+			echo "Binding parameters failed: (" . $stmt->errno . ") ".  $stmt->error;
+	}
+		
+	if(!$stmt->execute()){
+		echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	}
+	$stmt -> close();
+}
+
+if(!empty($_GET['content'])){
+	commentInsertion();
+
 }
 
 if($cid != NULL)
@@ -143,8 +153,10 @@ if($cid != NULL)
 	findDes();
 	findComment();
 	submitComment();
->>>>>>> Update for COmment
+//>>>>>>> Update for COmment
 }
+
+
 
 $mysqli->close();
 ?>

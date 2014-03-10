@@ -77,18 +77,20 @@ function getScore($CID){
 	if($stmt->fetch()){
 		echo "<Strong>Rating: ";
 		if ($score == NULL){
-			echo "0";
-		}else{
-			echo $score;
+			$score = 0;
 		}
+		echo $score;
 		echo "</Strong><br>";
 		echo "<Strong>Rating By ";
 		if ($total == NULL){
-			echo "0";
-		}else{
-			echo $score;
+			$total = 0;
 		}
+		echo $total;
 		echo " People</Strong><br>";
+		echo '<input type="hidden" name= '.$CID.'total value= '.$total.'>';
+		echo  '<input type="hidden" name= '.$CID.'avg value='.$score.'>';
+
+
 	}
 	$stmt->close();
 }

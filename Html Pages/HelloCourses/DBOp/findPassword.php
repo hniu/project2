@@ -39,7 +39,7 @@ if($stmt->fetch() != null){
 	
 	Hello, '.$name.'
 	
-	You recently asked to reset your password on HelloCourses. To complete your request, your current password is: 
+	You recently asked for your password on HelloCourses. To complete your request, your current password is: 
 	
 	------------------------
 	Password: '.$password.'

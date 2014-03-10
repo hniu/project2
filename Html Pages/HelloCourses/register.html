@@ -1,37 +1,34 @@
 <html>
-<title>Registration Page</title>
 <script type="text/javascript" src="js/regValidate.js"></script>
+<head>
+<title>Registration Page</title>
+<link href="css/login-box.css" rel="stylesheet" type="text/css" />
+</head>
+<body background="img/lion.jpg">
+<div style="padding: 100px 0 0 0px;" align="center">
+<div id="login-box" >
 
+<H2>Hello Courses</H2>
+<br />
 <form action="DBOp/register.php" id="register" method="post" name="myForm">
+<div id="login-box-name" style="margin-top:0px;">Email*:</div>
+<div id="login-box-field" style="margin-top:10px;">
+<input id="email" maxlength="45" name="email" type="email" placeholder="me@example.com" size=30 required="required"/></div>
+<div id="login-box-name" style="margin-top:0px;">Username*:</div>
+<div id="login-box-field" style="margin-top:10px;">
+<input id="username" maxlength="45" name="username" type="text" size=30 placeholder="At least 3 letters or numbers" pattern="[a-zA-Z0-9]{3,}" required="required"/></div>
+<div id="login-box-name" style="margin-top:0px;">Password*:</div>
+<div id="login-box-field" style="margin-top:10px;">
+<input id="password" maxlength="10" name="password" type="password" size=30 placeholder="5 - 10 letters or numbers" pattern="[a-zA-Z0-9]{5,}" required="required"/></div>
+<div id="login-box-name" style="margin-top:0px;">Repassword*:</div>
+<div id="login-box-field" style="margin-top:10px;">
+<input id="re-password" maxlength="10" name="re-password" type="password" size=30 oninput="check(this)" required="required"/></div>
 
-<table border="0">
-<tbody>
+<input type="image" value="submit" src="img/register.png">
+<a href="login.html" style="margin-left:-100px;">Home</a></span>
+</div>
+</div>
 
-<tr>
-<td><label for="email">Email Address*:</label> </td>
-<td><input id="email" maxlength="45" name="email" type="email" placeholder="me@example.com" size=30 required="required" required="required"/></td>
-</tr>
-
-<tr>
-<td><label for="username">User Name*:</label> </td>
-<td><input id="username" maxlength="45" name="username" type="text" size=30 placeholder="At least 3 letters or numbers" pattern="[a-zA-Z0-9]{3,}" required="required"/> </td>
-</tr>
-
-<tr>
-<td><label for="password">Password*:</label></td>
-<td><input id="password" maxlength="10" name="password" type="password" size=30 placeholder="5 - 10 letters or numbers" pattern="[a-zA-Z0-9]{5,}" required="required"/></td>
-</tr>
-
-<tr>
-<td><label for="password">Re-Password*:</label></td>
-<td><input id="re-password" maxlength="10" name="re-password" type="password" size=30 oninput="check(this)" required="required"/></td>
-</tr>
-
-<tr>
-<td align="right"><input name="Submit" type="submit" value="Sign Up" /></td>
-</tr>
-
-</tbody></table>
 </form>
-<a href="login.html">Home</a>
+</body>
 </html>
