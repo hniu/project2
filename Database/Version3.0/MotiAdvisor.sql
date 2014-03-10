@@ -20,7 +20,7 @@ CREATE TABLE User
   `Email` char(30) NOT NULL,
   `PassWord` char(20) NOT NULL,
   `Name` char(20) NOT NULL,
-  `MID` int(4) default NULL,
+  `MID` int(4) default 6,
   PRIMARY KEY  (`ID`,`Email`),
   KEY `MID` (`MID`),
   CONSTRAINT `User_FK1_MID` FOREIGN KEY (`MID`) REFERENCES `Major` (`MID`)
@@ -142,7 +142,7 @@ CREATE TABLE ClassComment
   `CID` int(5) NOT NULL,
   `ID` int(5) NOT NULL,
   `Comment` text,
-  `Time` time,
+  `Time` datetime default now(),
   PRIMARY KEY  (`CID`,`ID`),
   KEY `CID` (`CID`),
   KEY `ID` (`ID`),

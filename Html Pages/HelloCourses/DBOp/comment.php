@@ -3,17 +3,28 @@
 <title>All Courses</title>
 </head>
 <body>
+<<<<<<< HEAD
 
+=======
+<a href="../addCoursesPage.php">HOME</a>
+>>>>>>> Update for COmment
 <div id="div1" style="float:left;width:50%"> 
 <?php
 include ('../conn/connData.txt');
 
 //---------------------------------------------set up the connection with mysql
 $mysqli = new mysqli($server, $user, $pass, $dbname, $port);
-if ($mysqli->connect_errno) {
+if ($mysqli->connect_errno) 
+{
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
 
+<<<<<<< HEAD
+=======
+session_start();
+$id=$_SESSION['id'];
+
+>>>>>>> Update for COmment
 // find the course name according to its id
 function findCourses(){
 	global $mysqli;
@@ -43,7 +54,12 @@ findCourses();
 $cid=$_GET['cid'];
 
 // find the course name according to its id
+<<<<<<< HEAD
 function findDes(){
+=======
+function findDes()
+{
+>>>>>>> Update for COmment
 	global $mysqli;
 	global $cid;
 	$sql = 'select CName,Description,Credit,EvaluationRate from Class where CID='.$cid;
@@ -69,11 +85,65 @@ function findDes(){
 		echo '<br>';
 	}
 	$stmt->close();
+<<<<<<< HEAD
 
 }
 //show all the courese
 if($cid != NULL){
 	findDes();
+=======
+}
+
+function findComment()
+{
+	global $mysqli;
+	global $cid;
+	$sql = 'select Name,Comment,Time from ClassComment as cc join User as u on cc.ID=u.ID where CID='.$cid;
+	$SName = NULL;
+	$SComment = NULL;
+	$Time = NULL;
+		//create statement
+	$stmt=$mysqli->prepare($sql);
+	//execute query
+	$stmt->execute();
+	//bind result
+	$stmt->bind_result($SName,$SComment,$Time);
+	While($stmt->fetch())
+	{
+		echo '<div class="text" style=" text-align:left;"> <b>' .$SName.'</b> : '. $Time .'</a> <br>';
+		echo '<div class="text" style=" text-align:left;"> ' .$SComment.'</a> <br>';
+		
+	}
+	$stmt->close();
+}
+
+function submitComment()
+{
+	echo '<div class="text" style=" text-align:left;"> You say: </a> <br>';
+	echo '<textarea name="content" cols="36" rows="8" id="content" style="border: 1 solid #888888;LINE-HEIGHT:18px;padding: 3px;"></textarea>';
+	echo '<input type="button" onClick="commentInsertion()" value="Submit"/>';
+}
+
+function commentInsertion()
+{
+	global $mysqli;
+	global $cid;
+	global $id;
+	$query = "INSERT INTO `People` VALUES (";
+	$query = $query.$cid.",".$id.",'".$_GET["content"].",'default'";
+	if($stmt =  $mysqli->prepare($query))
+	{
+		$stmt -> execute();
+		$stmt -> close();
+	}
+}
+
+if($cid != NULL)
+{
+	findDes();
+	findComment();
+	submitComment();
+>>>>>>> Update for COmment
 }
 
 $mysqli->close();
