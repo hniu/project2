@@ -23,7 +23,9 @@ $cid=NULL;
 $cname=NULL;
 $credit=NULL;
 
-function printSchedule($sql){
+$keys = array();
+
+function printSchedule($sql, $keys){
 	global $mysqli;
 	global $mid;
 	$stmt = $mysqli->prepare($sql);
@@ -50,15 +52,13 @@ function printSchedule($sql){
 	}
 	//bind result
 
-
 	while($stmt->fetch()){
-		echo '<tr';
-		if(isLearned($cid)){
-			echo ' bgcolor=red';
+    		if(!in_array($typename,$keys , true)){
+			echo '<br>'.$typename.'<br>';
+      	  		array_push($keys, $typename);
 		}
-		echo '><td>'.$typename.'</td><td>'.$totalCredit.'</td><td>'.$GID.'</td>
-		<td>'.$groupAlt.'</td><td>'.$graded.'</td><td>'.$classAlt.'</td>
-		<td>'.$cid.'</td><td>'.$cname.'</td><td>'.$credit.'</td></tr>';
+		echo $total .'...'.$totalCredit.'...'. $GID.'...'.$groupAlt.'...'. $graded.'...'. $classAlt.'...'. $cid.'...'. $cname.'...'. $credit.'<br>';
+		
 	}
 	$stmt->close();
 
@@ -96,7 +96,7 @@ Courses in Track (<?php echo $tname?>) for <?php echo $name?> in Next Term.
 </tr>
 <?php
 $nextTerm = 'SELECT TypeName, TotalCredit, GID, GroupAlternetive, Graded, ClassAlternetive, CID, CName, Credit FROM TrackClasses right join ScheduleClass Using (CID)  WHERE MID = ?';
-printSchedule($nextTerm);
+printSchedule($nextTerm, $keys);
 ?>
 </table>
 
@@ -115,7 +115,8 @@ Courses in Track (<?php echo $tname?>) for <?php echo $name?>.
 </tr>
 <?php
 $allrequired = 'SELECT TypeName, TotalCredit, GID, GroupAlternetive, Graded, ClassAlternetive, CID, CName, Credit FROM TrackClasses WHERE MID = ?';
-printSchedule($allrequired);
+printSchedule($allrequired, $keys);
+
 $mysqli->close();
 ?>
 </table>

@@ -107,6 +107,7 @@ function getTrack(){
 	<script type="text/javascript" src="js/jquery.js" ></script>
 	<script type="text/javascript" src="js/jquery.multiselect2side.js" ></script>
 	<script type="text/javascript">
+
 		$().ready(function() {
 			$('#courses').multiselect2side({
 				search: "Search: ",
@@ -163,7 +164,7 @@ function getTrack(){
 	<br>
 	<input type="submit" id="save" value="Save">
 	</form>
-	<a href="DBOp/schedule.php?track=Foundations&id=5" id='schedulelink' >Next Term Schedule</a>
+	<a href="DBOp/schedule.php?id=<?php echo $trackid?>" id='schedulelink' >Next Term Schedule</a>
 	<br>
 	<a href="DBOp/suggest.php?termid=1&termname=Fall 2013" id="termlink" >Suggest for Next Term</a>
 	<br>
