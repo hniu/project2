@@ -35,30 +35,11 @@ min-height:100%;
 	font: bold 44px "Calibri", Arial;
 }
 
-
-#login-box-name {
-	float: left;
-	display:inline;
-	width:80px;
-	text-align: right;
-	padding: 14px 10px 0 0;
-	margin:0 0 7px 0;
-}
-
-#login-box-field {
-	float: left;
-	display:inline;
-	width:230px;
-	margin:0;
-	margin:0 0 7px 0;
-}
-
-
 .form-login  {
 	width: 205px;
 	padding: 10px 4px 6px 3px;
 	border: 1px solid #0d2c52;
-	background-color:#1e4f8a;
+	background-color:#fff;
 	font-size: 16px;
 	color: #ebebeb;
 }

@@ -1,0 +1,144 @@
+.ms2side__div {
+	clear: left;
+	width: 100%;
+	padding: 1px;
+	float: left;
+	background : url('') repeat-x; /* HACK FOR CHROME */
+}
+
+.ms2side__select {
+	float: left;
+}
+
+.ms2side__header {
+	color: #000088;
+	background-color: none;
+	padding-bottom: 15px;
+	width: 900px;
+	height: 35px;
+}
+
+.ms2side__options, .ms2side__updown {
+	float: left;
+	font-size: 10pt;
+	margin: 0;
+	padding: 0 8px;
+	width: 80px;
+	color: black; 
+	text-align: center;
+	overflow: hidden;
+}
+
+.ms2side__updown {
+	font-size: 9pt;
+}
+
+.ms2side__options p, .ms2side__updown p {
+	margin: 2px 0;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	font-size: 16px;
+	cursor: pointer;
+	border: 1px solid black;
+}
+
+.ms2side__options p.ms2side_hover, .ms2side__updown p.ms2side_hover {
+	background-color: #19c482;
+	border-color: #138257;
+	cursor: pointer;
+	color: white;
+}
+
+.ms2side__options p.ms2side__hide, .ms2side__updown p.ms2side__hide {
+	cursor: default;
+	color: gray;
+	border: 1px solid black;
+	background-color: #F0F0F0;
+}
+
+.ms2side__div select {
+	width: 400px;
+	height: 500px;
+	float: left;
+	font-size: 16px;
+	border: 0px solid black;
+	padding: 5px;
+	/*border-radius: 5px 5px 5px 5px; */
+}
+
+/* INPUT FOR SEARCH */
+.ms2side__header input {
+	width: 400px;
+	height: 35px;
+	border-radius: 10px 10px 10px 10px; 
+	border: none;
+	font-size: 20px;
+	text-transform: none;
+	padding-left: 5px;
+
+}
+
+.ms2side__header input.wait {
+	width: 400px;
+	height: 35px;
+	background: #FFFFFF url(../img/loading.gif) no-repeat center right;
+}
+
+.ms2side__header input.small {
+	width: 400px;
+	height: 35px;
+}
+
+
+/* INPUT FOR SELECT SEARCH */
+.ms2side__header select {
+	width: 400px;
+	font-size: 11px;
+	height: 35px;
+	float: none;
+}
+
+.ms2side__header select.small {
+	width: 400px;
+}
+
+
+/* REMOVE FILTER OPTION FOR SEARCH */
+.ms2side__header a {
+	font-size: 10pt;
+	padding: 0 8px;
+	width: 16px;
+	height: 16px;
+	color: black;
+	text-align: center;
+	text-decoration: none;
+	border: 1px solid gray;
+	background: #FFFFFF url(../img/close.gif) no-repeat center center;
+	margin: 0 0 0 3px;
+}
+
+.ms2side__header a:hover {
+	background-color: #F0F0FF;
+	border-color: gray;
+}
+
+.butt{
+  border: 1px;
+  width: 100px;
+  padding: 10px;
+  background-color: #3747df;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.butt2{
+	  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+	height: 36px;
+      border: 0 !important;.  /*Removes border*/
+     -webkit-appearance: none;  /*Removes default chrome and safari style*/
+     -moz-appearance: none;  /*Removes default style Firefox*/
+}
+
