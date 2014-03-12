@@ -143,7 +143,6 @@ CREATE TABLE ClassComment
   `ID` int(5) NOT NULL,
   `Comment` text,
   `Time` datetime default now(),
-  PRIMARY KEY  (`CID`,`ID`),
   KEY `CID` (`CID`),
   KEY `ID` (`ID`),
   CONSTRAINT `CC_FK1_TID` FOREIGN KEY (`CID`) REFERENCES `Class` (`CID`),

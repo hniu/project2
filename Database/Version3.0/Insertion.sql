@@ -336,7 +336,7 @@ INSERT INTO `RequireType` VALUES
 (Null,'Colleage Writing',8),
 (Null,'Writing Core Course',4),
 (Null,'Upper-Division Math Elective',4),
-(Null,'Upper-Division CIS Elective',8),
+(Null,'BIS Upper-Division CIS Elective',8),
 (Null,'BIS Track Requirements',12),
 (Null,'CSC Track Requirements 1',4),
 (Null,'CSC Track Requirements 2',8),
@@ -344,8 +344,16 @@ INSERT INTO `RequireType` VALUES
 (Null,'CSE Track Requirements',12),
 (Null,'DI Track Requirements 1',8),
 (Null,'DI Track Requirements 2',4),
-(Null,'FUN Track Requirements',12),
-(Null,'SD Track Requirements',12);
+(Null,'FUN Track Requirements',20),
+(Null,'SD Track Requirements',12),
+(Null,'CSC Upper-Division CIS Elective',8),
+(Null,'CN Upper-Division CIS Elective',8),
+(Null,'CSE Upper-Division CIS Elective',8),
+(Null,'DI Upper-Division CIS Elective',8),
+(Null,'SD Upper-Division CIS Elective',8);
+
+
+
 
 INSERT INTO `GraduateRule` VALUES 
 (1,1),
@@ -366,7 +374,7 @@ INSERT INTO `GraduateRule` VALUES
 (2,6),
 (2,7),
 (2,8),
-(2,9),
+(2,19),
 (2,11),
 (2,12),
 (3,1),
@@ -377,7 +385,7 @@ INSERT INTO `GraduateRule` VALUES
 (3,6),
 (3,7),
 (3,8),
-(3,9),
+(3,20),
 (3,13),
 (4,1),
 (4,2),
@@ -387,7 +395,7 @@ INSERT INTO `GraduateRule` VALUES
 (4,6),
 (4,7),
 (4,8),
-(4,9),
+(4,21),
 (4,14),
 (5,1),
 (5,2),
@@ -397,7 +405,7 @@ INSERT INTO `GraduateRule` VALUES
 (5,6),
 (5,7),
 (5,8),
-(5,9),
+(5,22),
 (5,15),
 (5,16),
 (6,1),
@@ -408,7 +416,6 @@ INSERT INTO `GraduateRule` VALUES
 (6,6),
 (6,7),
 (6,8),
-(6,9),
 (6,17),
 (7,1),
 (7,2),
@@ -418,8 +425,21 @@ INSERT INTO `GraduateRule` VALUES
 (7,6),
 (7,7),
 (7,8),
-(7,9),
+(7,23),
 (7,18);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -454,8 +474,13 @@ INSERT INTO `GroupsOfType` VALUES
 (Null,15,'N','N'),/*DI Track Requirements 1; 1 group*/
 (Null,16,'N','N'),/*DI Track Requirements 2; 1 group*/
 (Null,17,'N','N'),/*FUN Track Requirements; 1 group*/
-(Null,18,'N','N');/*SD Track Requirements; 1 group*/
-
+(Null,18,'N','N'),/*SD Track Requirements; 1 group*/
+(Null,9,'N','N'),/*BIS Upper-Division CIS Elective; 1 group*/
+(Null,19,'N','N'),/*CSC Upper-Division Math Elective; 1 group*/
+(Null,20,'N','N'),/*CN Upper-Division Math Elective; 1 group*/
+(Null,21,'N','N'),/*CSE Upper-Division Math Elective; 1 group*/
+(Null,22,'N','N'),/*DI Upper-Division Math Elective; 1 group*/
+(Null,23,'N','N');/*SD Upper-Division Math Elective; 1 group*/
 
 
 
@@ -600,11 +625,53 @@ INSERT INTO `ClassesOfGroup` VALUES
 (25,94,'Y'),
 (25,39,'Y'),
 (27,77,'N'),
-(27,73,'Y'),
-(27,75,'Y'),
-(27,79,'Y'),
-(27,90,'Y'),
-(27,91,'Y');
+(27,73,'N'),
+(27,75,'N'),
+(27,79,'N'),
+(27,90,'N'),
+(27,91,'N');
+
+/*FUN Track Requirements; 1 group*/
+INSERT INTO `ClassesOfGroup` (select 26,CID, 'Y' from Class 
+where (CName like "CIS 39%" or CName like "CIS 4%" ) 
+and CID not in (
+select CID from TrackClasses where MID=6 and (CName like "CIS 39%" or CName like "CIS 4%" )));
+
+/*BIS Upper-Division CIS Elective; 1 group*/
+INSERT INTO `ClassesOfGroup` (select 28,CID, 'Y' from Class 
+where (CName like "CIS 39%" or CName like "CIS 4%" ) 
+and CID not in (
+select CID from TrackClasses where MID=1 and (CName like "CIS 39%" or CName like "CIS 4%" )));
+/*CSC Upper-Division Math Elective; 1 group*/
+INSERT INTO `ClassesOfGroup` (select 29,CID, 'Y' from Class 
+where (CName like "CIS 39%" or CName like "CIS 4%" ) 
+and CID not in (
+select CID from TrackClasses where MID=2 and (CName like "CIS 39%" or CName like "CIS 4%" )));
+/*CN Upper-Division Math Elective; 1 group*/
+INSERT INTO `ClassesOfGroup` (select 30,CID, 'Y' from Class 
+where (CName like "CIS 39%" or CName like "CIS 4%" ) 
+and CID not in (
+select CID from TrackClasses where MID=3 and (CName like "CIS 39%" or CName like "CIS 4%" )));
+/*CSE Upper-Division Math Elective; 1 group*/
+INSERT INTO `ClassesOfGroup` (select 31,CID, 'Y' from Class 
+where (CName like "CIS 39%" or CName like "CIS 4%" ) 
+and CID not in (
+select CID from TrackClasses where MID=4 and (CName like "CIS 39%" or CName like "CIS 4%" )));
+/*DI Upper-Division Math Elective; 1 group*/
+INSERT INTO `ClassesOfGroup` (select 32,CID, 'Y' from Class 
+where (CName like "CIS 39%" or CName like "CIS 4%" ) 
+and CID not in (
+select CID from TrackClasses where MID=5 and (CName like "CIS 39%" or CName like "CIS 4%" )));
+/*SD Upper-Division Math Elective; 1 group*/
+INSERT INTO `ClassesOfGroup` (select 33,CID, 'Y' from Class 
+where (CName like "CIS 39%" or CName like "CIS 4%" ) 
+and CID not in (
+select CID from TrackClasses where MID=7 and (CName like "CIS 39%" or CName like "CIS 4%" )));
+
+
+
+
+
 
 INSERT INTO `Term` VALUES
 (Null,'Fall 2013'),
@@ -615,73 +682,73 @@ INSERT INTO `Term` VALUES
 
 
 INSERT INTO `ScheduleClass` VALUES
-(3, 10),
-(3, 11),
-(3, 12),
-(3, 13),
-(3, 15),
-(3, 25),
-(3, 26),
-(3, 29),
-(3, 31),
-(3, 36),
-(3, 37),
-(3, 38),
-(3, 39),
-(3, 40),
-(3, 41),
-(3, 47),
-(3, 42),
-(3, 53),
-(3, 63),
-(3, 62),
-(3, 64),
-(3, 65),
-(3, 70),
-(3, 72),
-(3, 73),
-(3, 74),
-(3, 81),
-(3, 84),
-(3, 90),
-(3, 2),
-(3, 5),
-(3, 8),
-(3, 91),
-(3, 92),
-(3, 93),
-(3, 94),
-(3, 95),
-(3, 97),
-(3, 98),
-(3, 99),
-(3, 100),
-(3, 101),
-(3, 104),
-(3, 106),
-(3, 107),
-(3, 108),
-(3, 110),
-(3, 111),
-(3, 112),
-(3, 116),
-(3, 118),
-(3, 121),
-(3, 124),
-(3, 125),
-(3, 128),
-(3, 134),
-(3, 140),
-(3, 145),
-(3, 146),
-(3, 147),
-(3, 148),
-(3, 149),
-(3, 150),
-(3, 152),
-(3, 153),
-(3, 158),
-(3, 159),
-(3, 160);
-
+(3,11),
+(3,12),
+(3,15),
+(3,17),
+(3,19),
+(3,29),
+(3,30),
+(3,33),
+(3,35),
+(3,40),
+(3,41),
+(3,42),
+(3,43),
+(3,44),
+(3,45),
+(3,51),
+(3,46),
+(3,57),
+(3,67),
+(3,66),
+(3,68),
+(3,69),
+(3,74),
+(3,76),
+(3,77),
+(3,78),
+(3,85),
+(3,88),
+(3,94),
+(3,2),
+(3,5),
+(3,8),
+(3,95),
+(3,96),
+(3,97),
+(3,98),
+(3,99),
+(3,101),
+(3,102),
+(3,103),
+(3,104),
+(3,105),
+(3,108),
+(3,110),
+(3,111),
+(3,112),
+(3,114),
+(3,115),
+(3,116),
+(3,120),
+(3,122),
+(3,125),
+(3,128),
+(3,129),
+(3,132),
+(3,133),
+(3,138),
+(3,144),
+(3,149),
+(3,150),
+(3,151),
+(3,152),
+(3,153),
+(3,154),
+(3,156),
+(3,157),
+(3,162),
+(3,163),
+(3,164);
 
