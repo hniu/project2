@@ -1,4 +1,5 @@
 <?php
+//check if user is logged in; if not reirect to login page
 session_start();
 if($_SESSION[authed]!='yes'){
 header('location:login.html');
@@ -11,21 +12,21 @@ $coursecode = $_GET['coursecode'];
 $coursenum = $_GET['coursenum'];
 $termid=$_GET['termid'];
 $termname=$_GET['termname'];
-
+//get the term id so we know if we are scraping the correct schedule place
 if($termid == NULL){
 	$term_in = "201303";
 }else{
-$term = explode('-', $termname);
-$term_in = $term[2];
-if($termid == "3" || $termid == "4" || $termid == "1"){
-$term_in = $term_in-1;
-}
-$term_in .= 0;
-$term_in .= $termid;
+	$term = explode('-', $termname);
+	$term_in = $term[2];
+	if($termid == "3" || $termid == "4" || $termid == "1"){
+		$term_in = $term_in-1;
+	}
+	$term_in .= 0;
+	$term_in .= $termid;
 }
 
 $rawdata = file_get_contents('http://classes.uoregon.edu/pls/prod/hwskdhnt.P_ListCrse?term_in='.$term_in.'&sel_subj=dummy&sel_day=dummy&sel_schd=dummy&sel_insm=dummy&sel_camp=dummy&sel_levl=dummy&sel_sess=dummy&sel_instr=dummy&sel_ptrm=dummy&sel_attr=dummy&sel_cred=dummy&sel_tuition=dummy&sel_open=dummy&sel_weekend=dummy&sel_title=&sel_to_cred=&sel_from_cred=&sel_subj='.$coursecode.'&sel_crse='.$coursenum.'&sel_crn=&sel_camp=%25&sel_levl=%25&sel_attr=%25&begin_hh=0&begin_mi=0&begin_ap=a&end_hh=0&end_mi=0&end_ap=a&submit_btn=Show+Classes');
-
+//get contents of page and search for the table below; print all data inbetween the tables
 $text = '';
 $needle = '<CAPTION class="captiontext">Classes Found</CAPTION>';
 echo '<TABLE  CLASS="datadisplaytable" SUMMARY="This layout table is used to present the sections found" width="592">';
@@ -60,7 +61,7 @@ table{
 	font-weight: 300;
  	font-size: 14px;
  	padding: 0;
- 		*border-collapse: collapse; 
+ 	*border-collapse: collapse; 
 	border-spacing: 1px;
 	color: #000;
 }

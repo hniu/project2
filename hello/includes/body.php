@@ -4,7 +4,7 @@
     <section id="header" class="clearfix">
         <div class="container">
             <header>
-                <div id="logo">Hello Courses!</div>
+                <div id="logo">HELLO COURSES!</div>
             </header>
             <div align="center">
                 <nav class="clearfix">

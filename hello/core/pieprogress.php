@@ -1,4 +1,5 @@
 <?php
+//this code fetches the number of classes the user has taken in order to calculate the pie chart
 $sql = 'select sum(Credit) as total from ChosenClass left join Class using (CID) where ID = ?';
 $total = NULL;
     $stmt = $mysqli->prepare($sql);

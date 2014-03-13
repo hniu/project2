@@ -2,13 +2,11 @@
 <?php
 //if we got something through $_POST
 if (isset($_POST['search'])) {
-    // here you would normally include some database connection
 $code = $_POST['search'];
 $id = NULL;
 $name = NULL;
 
 //query for classes with code X that is offered in term Y
-// $sql = "SELECT code, id, name FROM classes WHERE code = ?";
 $sql = "SELECT CName FROM Class right join ScheduleClass Using (CID) WHERE CName LIKE ?";
     $stmt = $mysqli->prepare($sql);
     if(!$stmt){

@@ -40,7 +40,7 @@ if($stmt->fetch() != null){
 	$_SESSION['name'] = $Name;
 	$_SESSION['mid'] = $MID;
 	$_SESSION[authed]="yes";
-	Header( "Location: ../addCourses.php" ); 
+	Header( "Location: ../dashboard.php" ); 
 
 }else{
 	echo 'Wrong Email/Password!';

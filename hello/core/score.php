@@ -19,19 +19,20 @@ foreach ($courses as $c){
 	$avg = doubleval($_POST[$c.'avg']);
 	if($evals == NULL){
 		$score = 0;
+		$newtotal = $total;
 	}else{
 		$score = $evals;
+		$newtotal = $total + 1;
 	}
 	echo "total".$total;
 	echo "avg".$avg;
 	echo "evals".$evals;
-	$newtotal = $total + 1;
 	$newavg = ($avg * $total + $score) / $newtotal;
 	echo $score;
 	echo '<br>';
 	echo $newtotal;
 	echo '<br>';
-	echo $newavg;
+	echo round($newavg, 1);
 	echo '<br>';
 	echo '<br>';
 	echo '<br>';

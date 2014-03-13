@@ -17,7 +17,7 @@ function checkExist(){
 	global $email;
 	$stmt = $mysqli->prepare("SELECT Email FROM User WHERE Email = ?");
 	$stmt->bind_param('s', $email);
-    	$stmt->execute();
+    $stmt->execute();
 	if($stmt->fetch()){
 		$stmt->close();
 		return true;
@@ -36,11 +36,11 @@ if(!checkExist()){
 	// execute the statement
 	$stmt->execute();
 	$stmt->close();
-	echo 'Hi '.$username.', you have registered Motivity Products';
-	echo '<a href="../login.html"> Home </a> ';
+	echo $username.', your registration is successful! <br>';
+	echo 'Continue to the <a href="../login.html">LOGIN</a> page. ';
 }else{
 	echo 'Sorry, the email already exist!';
-	echo '<a href="../login.html"> Home </a> ';
+	echo '<a href="../login.html">Try Again</a> ';
 }
 
 $mysqli->close();

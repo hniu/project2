@@ -85,7 +85,18 @@ h3{
 }
 
 
-
+input#buttonstyle{
+margin-left: 5px;
+cursor:pointer;
+padding:5px 25px; 
+background:#313c3d; 
+border:1px solid #000000; 
+color:#f3f3f3;
+font-size:1em;
+}
+input#buttonstyle:hover, input#buttonstyle:focus{
+background-color :#4b5c5e;
+}
 
 del{
   color: red;

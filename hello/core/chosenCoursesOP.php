@@ -158,36 +158,35 @@ function checkReg($CID){
 			foreach ($neededAnd as $c){
 			$errmsg_arr[] = findCName($c) . ' ';
 			}
-				$errflag = true;
-
-if($errflag) {
-	$_SESSION['ERRMSG_ARR'] = $errmsg_arr;
-	session_write_close();
-	header("location: ../addCourses.php");
-	$mysqli->close();
-	exit();
-}
+			$errflag = true;
+			if($errflag) {
+				$_SESSION['ERRMSG_ARR'] = $errmsg_arr;
+				session_write_close();
+				header("location: ../addCourses.php");
+				$mysqli->close();
+				exit();
+			}
 			return false;
 		}
 	}
 	//if no electives
 	if(count($electives) != 0){
-		//anyone in the list will be fine
+	//anyone in the list will be fine
 		$neededOr = array_intersect($electives, $list);
 		if(count($neededOr) == 0){
-				$errmsg_arr[] = 'To take {$name}, you need to take at least one courses below:<br>';
+			$errmsg_arr[] = 'To take {$name}, you need to take at least one courses below:<br>';
 			foreach ($neededOr as $c){
 				$errmsg_arr[] = findCName($c) . ' ';
 			}
-				$errflag = true;
+			$errflag = true;
 
-if($errflag) {
-	$_SESSION['ERRMSG_ARR'] = $errmsg_arr;
-	session_write_close();
-	header("location: ../addCourses.php");
-	$mysqli->close();
-	exit();
-}
+			if($errflag) {
+				$_SESSION['ERRMSG_ARR'] = $errmsg_arr;
+				session_write_close();
+				header("location: ../addCourses.php");
+				$mysqli->close();
+				exit();
+			}
 			return false;
 		}
 	}
@@ -197,7 +196,6 @@ if($errflag) {
 
 
 //after selected:
-//
 //if CID in db is not in list: delete the record from db
 //if CID in db is in list: delete the record from list
 //if list is not null: insert all record to the db
@@ -210,10 +208,7 @@ if ($list == NULL){
 $deleteList = array_diff($lastSelectedCourses , $list);
 
 foreach ($deleteList as $CID){
-	//print "delete" . $CID;
-	//if(checkReg($CID)){
 		deleteCourse($CID);
-	//}
 }
 
 $insertList = array_diff($list, $lastSelectedCourses );

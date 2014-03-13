@@ -1,10 +1,5 @@
-/* JS File */
-
-// Start Ready
 $(document).ready(function() {  
-
-	// Live Search
-	// On Search Submit and Get Results
+	//live search function for ratings; queries database for each key entered
 	function search() {
 		var query_value = $('input#search').val();
 		$('b#search-string').html(query_value);
@@ -22,13 +17,13 @@ $(document).ready(function() {
 	}
 
 	$("input#search").live("keyup", function(e) {
-		// Set Timeout
+		//set a timeout in case takes too long
 		clearTimeout($.data(this, 'timer'));
 
-		// Set Search String
+		//the search term
 		var search_string = $(this).val();
 
-		// Do Search
+		//execute the search
 		if (search_string == '') {
 			$("ul#results").fadeOut();
 			$('h4#results-text').fadeOut();

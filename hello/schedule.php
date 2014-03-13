@@ -49,10 +49,14 @@ function printSchedule($sql, $keys){
 	echo '<table width="905" style="*border-collapse: collapse; 
 	border-spacing: 0px;"><tr><td bgcolor="#fff">';
 	//bind result
+	$save = NULL;
+	$scisave = NULL;
 	while($stmt->fetch()){
-    		if(!in_array($typename,$keys , true)){
+		if((7 <= $GID) && ($GID <= 15)){$groupid = '['.$GID.'] ';}
+		if(($typename != $save)){
 			echo '<div style="clear:both; padding:8px; background:#474d81; color:#fff;">'.$typename.' (' . $totalCredit . ' cr)</div>
-			<div style="clear:both; padding:8px; background:#e7e7e7; color:#777777; font-style: italic;">';
+			<div style="clear:both; padding:8px; background:#e7e7e7; color:#777777; font-style: italic; font-weight:bold;">';
+
 			if(strpos($typename, "Lower-Division Core") !== false){echo 'Complete all.</div>';}
 			if(strpos($typename, "Upper-Division Core") !== false){echo 'Complete all.</div>';}
 			if(strpos($typename, "Mathematics Requirements 1") !== false){echo 'Complete one of the sequences below (Calculus, Calculus with Theory, or Calc for Biol Sci).</div>';}
@@ -64,22 +68,44 @@ function printSchedule($sql, $keys){
 			if(strpos($typename, "Upper-Division CIS") !== false){echo 'Complete two.</div>';}
 			if(strpos($typename, "Track Requirements 1") !== false){echo 'Complete all.</div>';}
 			if(strpos($typename, "Track Requirements 2") !== false){echo 'Choose one.</div>';}
-      	  		array_push($keys, $typename);
-		}
-		// echo $total .' '.$totalCredit.' '. $GID.' '.$groupAlt.' '. $graded.' '. $classAlt.' '. $cid.' '. $cname.' '. $credit.'<br>';
-		echo '<div style="width:290px; float:left; padding-left:10px; padding-top:8px; padding-bottom:8px;">';
-		if((7 <= $GID) && ($GID <= 15)){
-			if(isLearned($cid)){
-				echo '<del>['.$GID.'] ' . $cname . '</del></div>';
+			if(strpos($typename, "Track Requirements") !== false){echo 'Choose three.</div>';}
+			$save = $typename;
+			}
+
+			if((7 <= $GID) && ($GID <= 15)){
+			if($GID != $scisave){
+				echo '<div style="clear:both; padding:8px; background:#f5f5f5; color:#777777; font-size:12px;">';
+				if(strpos($cname, "PHYS") !== false){echo 'PHYSICS</div>';}
+				if(strpos($cname, "CH") !== false){echo 'CHEMISTRY</div>';}
+				if(strpos($cname, "BI") !== false){echo 'BIOLOGY: take BI 211 and ONE of these: 212, 213; then choose ONE of these: 111, 113, 221, 224</div>';}
+				if(strpos($cname, "PSY") !== false){echo 'PYSCHOLOGY: take 201 and 202 then choose ONE of these: 304, 330, 348</div>';}
+				if(strpos($cname, "GEOG") !== false){echo 'GEOGRAPHY</div>';}
+				if(strpos($cname, "GEOL") !== false){echo 'GEOLOGY: take 141 then choose TWO from these: 321, 322, 323</div>';}
+				echo '<div style="width:290px; float:left; padding-left:10px; padding-top:8px; padding-bottom:8px;">';
+				if(isLearned($cid)){
+					echo '<del>['. $GID . '] '. $cname . '</del></div>';
+				}else{
+					echo '[' . $GID . '] ' . $cname. '</div>';
+				}
+				$scisave = $GID;
 			}else{
-				echo '['.$GID.'] '. $cname. '</div>';}
+				echo '<div style="width:290px; float:left; padding-left:10px; padding-top:8px; padding-bottom:8px;">';
+				if(isLearned($cid)){
+					echo '<del>['. $GID .'] '. $cname . '</del></div>';
+				}else{
+					echo '['. $GID .'] '. $cname. '</div>';
+				}
+			}
 		}else{
+
+			echo '<div style="width:290px; float:left; padding-left:10px; padding-top:8px; padding-bottom:8px;">';
 			if(isLearned($cid)){
 				echo '<del>' . $cname . '</del></div>';
 			}else{
-				echo $cname. '</div>';}
+				echo $cname. '</div>';
 			}
 		}
+	}
 	$stmt->close();
 echo '</td></tr></table><br><br>';
 }
@@ -123,33 +149,23 @@ include 'includes/body.php';?>
 		}
 	</script>
 
-
-<!-- <strong>
-<font size=13>
-Courses in Track (<?php echo $tname?>) for <?php echo $name?> in Next Term.
-</font>
-</strong>
-
-<?php
-$nextTerm = 'SELECT TypeName, TotalCredit, GID, GroupAlternetive, Graded, ClassAlternetive, CID, CName, Credit FROM TrackClasses right join ScheduleClass Using (CID)  WHERE MID = ?';
-printSchedule($nextTerm, $keys);
-?> -->
-<font size=5><b>Search Course Schedule</b></font><br><br>
+	<font size=5><b>Search Course Schedule</b></font><br><br>
 	Choose a Term: &nbsp; &nbsp; &nbsp;<select name="term" id = "term" onChange='getTermValue(this)'>
 	<?php
 		//preload all the term
 		loadTerm();
 	?>
-	</select><br><br>
+	</select>
+	<br><br>
 	<a href="suggest.php?termid=1&termname=Fall 2013" id="termlink" style="padding:5px; background:white;">Search</a>
 	<br><br>	
-<font size=5><b>An Overview of Completed Requirements</b></font><br><br>
-<?php
+	<font size=5><b>An Overview of Completed Requirements</b></font><br><br>
+	<?php
 
-$allrequired = 'SELECT TypeName, TotalCredit, GID, GroupAlternetive, Graded, ClassAlternetive, CID, CName, Credit FROM TrackClasses WHERE MID = ?';
-printSchedule($allrequired, $keys);
+	$allrequired = 'SELECT TypeName, TotalCredit, GID, GroupAlternetive, Graded, ClassAlternetive, CID, CName, Credit FROM TrackClasses WHERE MID = ? ORDER BY TypeName, GID, ClassAlternetive, CName';
+	printSchedule($allrequired, $keys);
 
-$mysqli->close();
-?>
+	$mysqli->close();
+	?>
 
 <?php include 'includes/footer.php'; ?>

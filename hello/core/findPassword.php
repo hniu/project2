@@ -57,7 +57,7 @@ if($stmt->fetch() != null){
 			'X-Mailer: PHP/' . phpversion(); //set the header
 	mail($to, $subject, $message, $headers); // Send our email
 
-	echo 'The password has sent to your email, please check it.';
+	echo 'The password has sent to your email, please check it.<br>';
 	echo '<a href="../login.html">BACK<<</a>';	
 	
 }else{//email does not exist

@@ -86,14 +86,14 @@ function getScore($CID){
 		if ($score == NULL){
 			$score = 0;
 		}
-		echo $score;
+		echo round($score, 1);
 		echo "</Strong><br>";
 		echo "<Strong>Rating By ";
 		if ($total == NULL){
 			$total = 0;
 		}
 		echo $total;
-		echo " People</Strong><br>";
+		echo " People</Strong><br><br>";
 		echo '<input type="hidden" name= '.$CID.'total value= '.$total.'>';
 		echo  '<input type="hidden" name= '.$CID.'avg value='.$score.'>';
 
@@ -106,8 +106,8 @@ session_start();
 $courses = $_SESSION['selCourses'];
 
 foreach ( $courses as $CID ){
-	echo findCName($CID);
-	echo '<br><font color=blue>Course Description:';
+	echo '<font size="5"><b>'.findCName($CID).'</b></font>';
+	echo '<br><font color="#353542">Course Description:';
 	$result = findDes($CID);
 	if(strlen($result) == 1){
 		echo 'None';
@@ -115,21 +115,26 @@ foreach ( $courses as $CID ){
 		echo $result;
 	}
 	echo '</font><br>';
-	$rating = '<span class="star-rating">
-  	<input type="radio" name= '.$CID.' value="1"><i></i>
-  	<input type="radio" name= '.$CID.' value="2"><i></i>
-  	<input type="radio" name= '.$CID.' value="3"><i></i>
-  	<input type="radio" name= '.$CID.' value="4"><i></i>
-  	<input type="radio" name= '.$CID.' value="5"><i></i>
-	</span><br>';
+	$rating = '<nav class="segmented-button">
+  <b style="color:#ffffff;">Rate:</b> <input type="radio" name='.$CID.' value="1" id="one'.$CID.'">
+  <label for="one'.$CID.'" class="first">1</label>
+  <input type="radio" name='.$CID.' value="2" id="two'.$CID.'">
+  <label for="two'.$CID.'">2</label>
+  <input type="radio" name='.$CID.' value="3" id="three'.$CID.'">
+  <label for="three'.$CID.'">3</label>
+   <input type="radio" name='.$CID.' value="4" id="four'.$CID.'">
+  <label for="four'.$CID.'">4</label>
+  <input type="radio" name='.$CID.' value="5" id="five'.$CID.'">
+  <label for="five'.$CID.'" class="last">5</label>
+</nav>';
 	echo $rating;
 	getScore($CID);
+	echo '<hr style="border: 1px solid #1a939c">';
 }
 
 $mysqli->close();
 ?>
-<input type="submit" value="Evaluate">
+<input type="submit" id="buttonstyle" value="Evaluate">
 </form>
-<a href="addCoursesPage.php">Home</a>
 </body>
 </html>

@@ -5,6 +5,8 @@ header('location:login.html');
 exit();
 }
 ?>
+<link rel="stylesheet" href="css/rating.css" type="text/css" media="screen" />
+
 <?php
 include ('conn/connData.txt');
 
@@ -15,8 +17,6 @@ if ($mysqli->connect_errno)
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
 
-//
-//=======
 session_start();
 $id=$_SESSION['id'];
 
@@ -47,14 +47,14 @@ function findDes()
 	$stmt->bind_result($CName,$Description,$Credit,$ER);
 	if($stmt->fetch())
 	{
-		echo '<div class="text" style=" text-align:center;"> <h1>' .$CName.'</h1></a>';
+		echo '<div class="text" style="text-align:center; width:100px; height:70px; float:left; 
+		background:#303a3b;color:#fff;font-size:20px;padding-top:18px;margin-bottom:5px;">RATING<br><b>'.round($ER, 1).'</b>
+		</div><div style="float:left; color:#cffaff;font-size:30px; padding-left:10px; padding-top:20px;"><b>'.$CName.'</b></div>';
+		echo '<br><div class="text" style="clear:both; text-align:left;"> Credit: <b>'. $Credit.'</b></div>';
 		echo '<br><br>';
-		echo '<div class="text" style=" text-align:left;"> Credit: <b>'. $Credit.'</b></a>';
-		echo '<br>';
-		echo '<div class="text" style=" text-align:left;"> Rating: <b>'.$ER.'</b></a>';
-		echo '<br>';
-		echo '<div class="text" style=" text-align:left;">	'.$Description.'</a>';
-		echo '<br>';
+		echo '<div class="text" style=" text-align:left;">	'.$Description.'</div>';
+		echo '<br><br>';
+		echo '<hr style="border: 1px solid #0f9099">';
 	}
 	$stmt->close();
 //<<<<<<< HEAD
@@ -77,9 +77,9 @@ function findComment()
 	$stmt->bind_result($SName,$SComment,$Time);
 	While($stmt->fetch())
 	{
-		echo '<hr>';
-		echo '<div class="text" style=" text-align:left;"> <b>' .$SName.'</b> : '. $Time .'</a> <br>';
-		echo '<div class="text" style=" text-align:left;"> ' .$SComment.'</a> <br>';
+		echo '<div class="text" style=" text-align:left;"> <b>' .$SName.'</b> : '. $Time .'</div> <br>';
+		echo '<div class="text" style=" text-align:left;"> ' .$SComment.'</div> <br>';
+		echo '<hr style="border: 1px solid #0f9099">';
 		
 	}
 	$stmt->close();
@@ -87,12 +87,13 @@ function findComment()
 
 function submitComment()
 {
+	echo '<div align="center">';
 	echo '<form name="content" method="get" action='.$_SERVER['PHP_SELF'].'>';
-	echo '<div class="text" style=" text-align:left;"> You say: </a> <br>';
-	echo '<textarea name="content" cols="36" rows="8" id="content" required = "required" style="border: 1 solid #888888;LINE-HEIGHT:18px;padding: 3px;"></textarea>';
+	echo '<br><br><div class="text" style=" text-align:left;"> Comments: </div> <br>';
+	echo '<textarea name="content" cols="50" rows="8" id="content" required = "required" style="border: 1 solid #888888;LINE-HEIGHT:18px;padding: 3px; opacity:.7;"></textarea>';
 	echo '<input type="hidden" name="cid" value='.$_SESSION['precid'].'>';
-	echo '<input type="submit" value="Submit"/>';
-	echo '</form>';
+	echo '<br><input type="submit" id="buttonstyle" value="Post"/>';
+	echo '</form></div>';
 }
 
 function commentInsertion()
@@ -129,8 +130,6 @@ if($cid != NULL)
 	submitComment();
 //>>>>>>> Update for COmment
 }
-
-
 
 $mysqli->close();
 ?>
